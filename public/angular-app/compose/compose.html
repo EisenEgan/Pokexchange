@@ -1,0 +1,23 @@
+<poke-navigation></poke-navigation>
+<div class="compose-container">
+  <div class="compose-to">
+    To: {{ recipient.username }}
+  </div>
+  <form novalidate name="composeForm" ng-submit="submit(composeForm)">
+    <div class="compose-subject">
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Subject</label>
+        <input ng-model="message.subject">
+      </md-input-container>
+    </div>
+    <div class="compose-message">
+      <md-input-container class="md-block">
+        <label>Message</label>
+        <textarea required ng-model="message.message" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+      </md-input-container>
+    </div>
+    <div class="compose-submit">
+      <md-button type="submit" class="md-raised md-primary send-btn">Send</md-button>
+    </div>
+  </form>
+</div>

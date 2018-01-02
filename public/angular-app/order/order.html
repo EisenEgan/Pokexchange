@@ -1,0 +1,76 @@
+<poke-navigation></poke-navigation>
+<div class="order-container">
+  <div class="order-details-header">
+    Order Details
+  </div>
+  <div class="order-details-body" ng-if="order.type=='Buy'">
+    <a ng-href="/card/{{ order.firstPersonCard._id }}" class="order-card-container">
+      <img class="order-card" ng-src="{{ order.firstPersonCard.imagePath }}" />
+    </a>
+    <div class="order-details-details-container">
+      <div class="order-details-details">
+        <a href="#" class="order-details-details-header">{{ order.firstPersonCard.name }} (Condition: {{ order.firstPersonCard.condition }})</a>
+        <table class="order-details-table">
+          <tr>
+            <td>Item Price:</td>
+            <td>{{ order.firstPersonCard.price | currency }}</td>
+          </tr>
+          <tr>
+            <td>Item Number:</td>
+            <td>{{ order.firstPersonCard._id }}</td>
+          </tr>
+          <tr>
+            <td>Order Date:</td>
+            <td>{{ order.createdAt | date:'M/d/yyyy' }}</td>
+          </tr>
+          <tr>
+            <td>Order Paid:</td>
+            <td>{{ order.paid ? "Yes" : "No" }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="order-details-btns">
+      <md-button class="md-raised md-primary order-btn" ng-click="contact(order)">{{ btnMessage }}</md-button>
+      <md-button class="md-raised md-primary order-btn">Check Shipping</md-button>
+    </div>
+  </div>
+  <div class="order-details-body" ng-if="order.type=='Trade'">
+    <a href="#" class="trade-order-card-container">
+      <img class="first-order-card" ng-src="{{ order.firstPersonCard.imagePath }}" />
+      <img class="second-order-card" ng-src="{{ order.secondPersonCard.imagePath }}" />
+    </a>
+    <div class="trade-details-details-container">
+      <div class="trade-details-details">
+        <div class="first-card-details">
+          Your card: <a ng-href="/card/{{ order.firstPersonCard._id }}">{{ order.firstPersonCard.name }} (Condition: {{ order.firstPersonCard.condition }})</a>
+        </div>
+        <div class="second-card-details">
+          Their card: <a ng-href="/card/{{ order.secondPersonCard._id }}">{{ order.secondPersonCard.name }} (Condition: {{ order.secondPersonCard.condition }})</a>
+        </div>
+        <table class="order-details-table">
+          <tr>
+            <td>Order Number:</td>
+            <td>{{ order._id }}</td>
+          </tr>
+          <tr>
+            <td>Order Date:</td>
+            <td>{{ order.createdAt | date:'M/d/yyyy' }}</td>
+          </tr>
+          <tr>
+            <td>Trade Accepted:</td>
+            <td>{{ order.tradeAccepted ? "Yes" : "No" }}</td>
+          </tr>
+          <tr>
+            <td>Items Recieved:</td>
+            <td>{{ order.firstCardsRecieved && order.secondCardsRecieved ? "Yes" : "No" }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="order-details-btns">
+      <md-button class="md-raised md-primary order-btn" ng-click="contact(order)">Contact Trade Partner</md-button>
+      <md-button class="md-raised md-primary order-btn">Check Shipping</md-button>
+    </div>
+  </div>
+</div>

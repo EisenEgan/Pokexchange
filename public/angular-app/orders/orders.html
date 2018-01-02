@@ -1,0 +1,129 @@
+<poke-navigation></poke-navigation>
+<div class="orders-list-container">
+  <div class="orders-list" ng-if="buyOrders.length">
+    <div class="order-type">
+      Bought
+    </div>
+    <div class="order" ng-repeat="order in buyOrders">
+      <a ng-href="/card/{{order.firstPersonCard._id}}" class="seller-card-container">
+        <img class="seller-card" src="{{order.firstPersonCard.imagePath}}" />
+      </a>
+      <div class="order-details">
+        <div class="order-details-link-container">
+          <a class="order-details-link" ng-href="/card/{{order.firstPersonCard._id}}">{{ order.firstPersonCard.name }} (Condition: {{ order.firstPersonCard.condition }})</a>
+        </div>
+        <div class="order-details-objectid">
+          ({{ order.firstPersonCard._id }})
+        </div>
+        <div class="order-details-date">
+          Order Date: {{ order.createdAt | date:'M/d/yyyy' }}
+        </div>
+        <div class="order-details-view-order">
+          <md-button class="md-raised md-primary" ng-click="viewOrder(order._id)">View Order</md-button>
+        </div>
+      </div>
+      <div class="order-total">
+        <div class="order-total-heading">
+          Order Total:
+        </div>
+        {{ order.total | currency }}
+      </div>
+    </div>
+  </div>
+  <div class="orders-list" ng-if="sellOrders.length">
+    <div class="order-type">
+      Sold
+    </div>
+    <div class="order" ng-repeat="order in sellOrders">
+      <a ng-href="/card/{{order.firstPersonCard._id}}" class="seller-card-container">
+        <img class="seller-card" ng-src="{{order.firstPersonCard.imagePath}}" />
+      </a>
+      <div class="order-details">
+        <div class="order-details-link-container">
+          <a class="order-details-link" ng-href="/card/{{order.firstPersonCard._id}}">{{ order.firstPersonCard.name }} (Condition: {{ order.firstPersonCard.condition }})</a>
+        </div>
+        <div class="order-details-objectid">
+          ({{ order.firstPersonCard._id }})
+        </div>
+        <div class="order-details-date">
+          Order Date: {{ order.createdAt | date:'M/d/yyyy' }}
+        </div>
+        <div class="order-details-view-order">
+          <md-button class="md-raised md-primary" ng-click="viewOrder(order._id)">View Order</md-button>
+        </div>
+      </div>
+      <div class="order-total">
+        <div class="order-total-heading">
+          Order Total:
+        </div>
+        {{ order.total | currency }}
+      </div>
+    </div>
+  </div>
+  <div class="orders-list" ng-if="tradeOrders.length">
+    <div class="order-type">
+      Traded
+    </div>
+    <div class="trade" ng-repeat="order in tradeOrders">
+      <a ng-href="/card/{{order.firstPersonCard._id}}" class="seller-card-container">
+        <img class="seller-card" ng-src="{{order.firstPersonCard.imagePath}}" />
+      </a>
+      <div class="trade-details">
+        <div class="traded-card">
+          Your Card: <a ng-href="/card/{{ order.firstPersonCard._id }}">{{ order.firstPersonCard.name }} (Condition: {{ order.firstPersonCard.condition }})</a>
+        </div>
+        <div class="trade-card-objectid">
+          ({{ order.firstPersonCard._id }})
+        </div>
+        <div class="traded-card">
+          Trade Card: <a ng-href="/card/{{ order.secondPersonCard._id }}">{{ order.secondPersonCard.name }} (Condition: {{ order.secondPersonCard.condition }})</a>
+        </div>
+        <div class="trade-card-objectid">
+          ({{ order.secondPersonCard._id }})
+        </div>
+        <div class="trade-details-date">
+          Order Date: {{ order.createdAt | date:'M/d/yyyy' }}
+        </div>
+        <div class="trade-details-view-order">
+          <md-button class="md-raised md-primary" ng-click="viewOrder(order._id)">View Order</md-button>
+        </div>
+      </div>
+      <a ng-href="/card/{{order.secondPersonCard._id}}" class="seller-card-container">
+        <img class="seller-card" ng-src="{{order.secondPersonCard.imagePath}}" />
+      </a>
+    </div>
+  </div>
+  <div class="orders-list" ng-if="pendingOrders.length">
+    <div class="order-type">
+      Pending
+    </div>
+    <div class="trade" ng-repeat="order in pendingOrders">
+      <a ng-href="/card/{{order.firstPersonCard._id}}" class="seller-card-container">
+        <img class="seller-card" ng-src="{{order.firstPersonCard.imagePath}}" />
+      </a>
+      <div class="trade-details">
+        <div class="traded-card">
+          Your Card: <a ng-href="/card/{{ order.firstPersonCard._id }}">{{ order.firstPersonCard.name }} (Condition: {{ order.firstPersonCard.condition }})</a>
+        </div>
+        <div class="trade-card-objectid">
+          ({{ order.firstPersonCard._id }})
+        </div>
+        <div class="traded-card">
+          Trade Card: <a ng-href="/card/{{ order.secondPersonCard._id }}">{{ order.secondPersonCard.name }} (Condition: {{ order.secondPersonCard.condition }})</a>
+        </div>
+        <div class="trade-card-objectid">
+          ({{ order.secondPersonCard._id }})
+        </div>
+        <div class="trade-details-date">
+          Order Date: {{ order.createdAt | date:'M/d/yyyy' }}
+        </div>
+        <div class="trade-details-view-order">
+          <md-button class="md-raised md-primary" ng-click="viewOrder(order._id)">View Order</md-button>
+        </div>
+      </div>
+      <a ng-href="/card/{{order.secondPersonCard._id}}" class="seller-card-container">
+        <img class="seller-card" ng-src="{{order.secondPersonCard.imagePath}}" />
+      </a>
+    </div>
+  </div>
+</div>

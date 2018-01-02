@@ -1,0 +1,268 @@
+<poke-navigation></poke-navigation>
+<div class="profile-container" ng-cloak>
+  <md-content class="options">
+    <md-list>
+      <md-list-item ng-click="changeView('profile')">
+        <div class="md-list-item-text">
+          <h3>My Profile</h3>
+        </div>
+      </md-list-item>
+      <md-list-item ng-click="displayProfile()">
+        <div class="md-list-item-text">
+          <h3>Displayed Profile</h3>
+        </div>
+      </md-list-item>
+      <md-list-item ng-click="changeView('cards')">
+        <div class="md-list-item-text">
+          <h3>My Cards</h3>
+        </div>
+      </md-list-item>
+      <md-list-item ng-click="changeView('add')">
+        <div class="md-list-item-text">
+          <h3>Add Card</h3>
+        </div>
+      </md-list-item>
+    </md-list>
+  </md-content>
+
+  <div class="main-panel">
+    <div class="avatar-container" ng-if="view=='profile'">
+      <img class="avatar" ng-if="vm.showGeneric" ng-src="https://s3.amazonaws.com/37assets/svn/765-default-avatar.png" />
+      <img class="avatar" ng-if="!vm.showGeneric" ng-src="{{vm.avatar}}" />
+    </div>
+    <md-content layout-padding class="profile-form" ng-if="view=='profile'">
+      <form novalidate name="profileForm" ng-submit="vm.submit(profileForm)">
+        <div layout="row" class="first-form-row">
+          <md-input-container flex="50">
+            <label>First Name</label>
+            <input name="firstName" ng-model="vm.user.firstName" />
+          </md-input-container>
+
+          <md-input-container flex="50">
+            <label>Last Name</label>
+            <input name="lastName" ng-model="vm.user.lastName" />
+          </md-input-container>
+        </div>
+
+        <md-input-container class="md-block">
+          <label>Email</label>
+          <input required type="email" name="email" ng-model="vm.user.email"
+                 minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+
+          <div ng-messages="profileForm.email.$error" role="alert">
+            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+              Your email must be between 10 and 100 characters long and look like an e-mail address.
+            </div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Address</label>
+          <input name="address" ng-model="vm.user.address"
+                 minlength="10" maxlength="100" />
+
+          <div ng-messages="profileForm.address.$error" role="alert">
+            <div ng-message-exp="['minlength', 'maxlength']">
+              Your address must be between 10 and 100 characters long.
+            </div>
+          </div>
+        </md-input-container>
+
+        <div layout="row">
+          <md-input-container flex="50">
+            <label>City</label>
+            <input name="city" ng-model="vm.user.city"
+                  minlength="3" maxlength="100" />
+            <div ng-messages="profileForm.city.$error" role="alert">
+              <div ng-message-exp="['minlength', 'maxlength']">
+                Your address must be between 3 and 100 characters long.
+              </div>
+            </div>
+          </md-input-container>
+
+          <md-input-container flex="50">
+            <label>State</label>
+            <md-select ng-model="vm.user.state">
+              <md-option ng-repeat="state in vm.stateList" ng-value="state">
+                {{ state }}
+              </md-option>
+            </md-select>
+          </md-input-container>
+        </div>
+
+        <md-input-container class="md-block">
+          <label>Avatar Url</label>
+          <input name="avatar" ng-model="vm.user.avatarUrl"
+                 minlength="10" maxlength="100" ng-pattern="/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/" />
+
+          <div ng-messages="profileForm.avatar.$error" role="alert">
+            <div ng-message-exp="['minlength', 'maxlength', 'pattern']">
+              Your website must be between 10 and 100 characters long and look like a URL.
+            </div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Website</label>
+          <input name="website" ng-model="vm.user.website"
+                 minlength="10" maxlength="100" ng-pattern="/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/" />
+
+          <div ng-messages="profileForm.website.$error" role="alert">
+            <div ng-message-exp="['minlength', 'maxlength', 'pattern']">
+              Your website must be between 10 and 100 characters long and look like a URL.
+            </div>
+          </div>
+        </md-input-container>
+
+        <div class="btn-container">
+          <md-button type="submit" class="md-raised md-primary">Change</md-button>
+        </div>
+      </form>
+    </md-content>
+
+    <div class="card-container" ng-if="view == 'cards'">
+      <!-- <div class="card">
+        <img class="pokemon-image" src="http://vignette3.wikia.nocookie.net/pokemon/images/c/cb/Charizard_%28Base_Set%29.JPG/revision/latest?cb=20130202134059" />
+        <div class="pokemon-details">
+          <div class="pokemon-details__heading">
+            <h2 class="pokemon-name">Charzard</h2>
+            <img class="pokemon-type" src="./img/pokemon-types/fire.png" />
+          </div>
+          <div class="pokemon-details__main">
+            <h4>Description:</h4>
+            <p>blah blah...</p>
+            <h4>Price:</h4>
+            <p>$120.00</p>
+            <h4>Condition:</h4>
+            <p>9/10</p>
+            <div class="remove-btn">
+              <md-button class="md-raised md-primary">Remove</md-button>
+            </div>
+          </div>
+        </div>
+      </div> -->
+      <div class="card" ng-repeat="card in vm.cards | filter:{sold:false, traded:false}">
+        <img class="pokemon-image" ng-src="{{ card.imagePath }}" />
+        <div class="pokemon-details">
+          <div class="pokemon-details__heading">
+            <h2 class="pokemon-name">{{ card.name }}</h2>
+            <!-- <img class="pokemon-type" src="./img/pokemon-types/fire.png" /> -->
+          </div>
+          <div class="pokemon-details__main">
+            <h4>Description:</h4>
+            <p>{{ card.description }}</p>
+            <h4>Price:</h4>
+            <p>{{ card.price | currency:"USD$" }}</p>
+            <h4>Condition:</h4>
+            <p>{{ card.condition }}</p>
+            <div class="remove-btn">
+              <md-button class="md-raised md-primary">Remove</md-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <md-content layout-padding class="profile-form" ng-if="view=='add'">
+      <form novalidate name="addForm" ng-submit="vm.submitAdd(addForm)">
+
+        <!-- <md-input-container class="md-block">
+          <label>Name</label>
+          <input required name="name" ng-model="vm.card.name" />
+          <div ng-messages="addForm.name.$error" role="alert">
+            <div ng-message="required">
+              A Name is required
+            </div>
+          </div>
+        </md-input-container> -->
+
+        <md-input-container class="md-block">
+          <label>Pokemon Name</label>
+          <md-select ng-model="vm.card.name">
+            <md-option ng-repeat="pokemon in vm.pokemonList" ng-value="pokemon.name">
+              {{ pokemon.name }}
+            </md-option>
+          </md-select>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Description</label>
+          <input name="description" ng-model="vm.card.description" />
+          <!-- <div ng-messages="addForm.name.$error" role="alert">
+            <div ng-message-exp="['required']">
+              A Name is required
+            </div>
+          </div> -->
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Price</label>
+          <input required name="price" ng-model="vm.card.price" ng-pattern="/^\d+(\.\d{1,2})?$/" />
+          <div ng-messages="addForm.price.$error" role="alert">
+            <div ng-message="required">Price is required</div>
+            <div ng-message="pattern">Price must be a number with at most 2 decimal places</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Condition</label>
+          <md-select name="condition" ng-model="vm.card.condition" required>
+            <md-option ng-repeat="condition in vm.conditionValues" ng-value="condition">
+              {{ condition }}
+            </md-option>
+          </md-select>
+          <div ng-messages="addForm.condition.$error" role="alert">
+            <div ng-message="required">Condition is required</div>
+          </div>
+        </md-input-container>
+
+        <!-- <md-input-container class="md-block"> -->
+          <!-- <input class="ng-hide" id="input-file-id" multiple type="file" />
+          <label for="input-file-id" class="md-button md-raised md-primary">Choose Files</label> -->
+          <label class="md-primary md-raised md-button" md-ink-ripple for="file-input">
+            <span>Add Image</span>
+          </label>
+          <input
+            class="ng-hide"
+            id="file-input"
+            type="file"
+            ngf-select
+            ng-model="vm.card.picFile"
+            name="picFile"
+            accept="image/*"
+            ngf-max-size="20MB"
+          />
+          <!-- <label for="input-file-id" class="md-button md-raised md-primary">Upload Image</label> -->
+          <!-- <input
+            type="file"
+            ngf-select
+            ng-model="vm.card.picFile"
+            name="file"
+            accept="image/*"
+            ngf-max-size="20MB"
+          /> -->
+          <div ng-messages="addForm.file.$error" role="alert">
+            <div ng-message-exp="maxSize">
+              File is too large
+            </div>
+          </div>
+          <div class="preview" ng-if="vm.card.picFile && addForm.picFile.$valid">
+            <img ngf-thumbnail="vm.card.picFile" class="thumb" />
+            <md-button ng-click="vm.card.picFile = null" class="md-raised md-primary">Remove</md-button>
+          </div>
+        <!-- </md-input-container> -->
+
+        <md-input-container class="md-block">
+          <md-checkbox name="trades" ng-model="vm.card.tradable" class="red-checkbox">
+            Are you willing to accept trades?
+          </md-checkbox>
+        </md-input-container>
+
+        <div class="btn-container">
+          <md-button type="submit" class="md-raised md-primary">Add Card</md-button>
+        </div>
+      </form>
+    </md-content>
+
+  </div>
+</div>

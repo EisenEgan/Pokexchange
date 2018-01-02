@@ -1,0 +1,60 @@
+<poke-navigation></poke-navigation>
+<div class="user-profile-container" ng-if="showProfile">
+  <div class="back-to-profile" ng-if="showLink">
+    <a class="back-to-profile-link" href="/profile">Back to Your Profile</a>
+  </div>
+  <div class="display-profile-container">
+    <div class="display-profile-avatar-container">
+      <img class="display-profile-avatar" ng-if="!user.avatarUrl" ng-src="https://s3.amazonaws.com/37assets/svn/765-default-avatar.png" />
+      <img class="display-profile-avatar" ng-if="user.avatarUrl" ng-src="{{user.avatarUrl}}" />
+    </div>
+    <div class="display-profile-info">
+      <div class="display-profile-info__username">
+        <!-- {{ user.username }} -->
+        <div class="username-display" ng-if="!showLink">
+          <a href ng-click="profileClicked(user)">{{ user.username }}</a>
+        </div>
+        <div class="username-display" ng-if="showLink">
+          {{ user.username }}
+        </div>
+      </div>
+      <div class="display-profile-info__name" ng-if="user.firstName && user.lastName">
+        {{ user.firstName }} {{ user.lastName }}
+      </div>
+    </div>
+  </div>
+  <div class="user-cards__header">
+    {{ user.username }}'s Cards:
+  </div>
+
+  <div class="results-container">
+    <div class="result" ng-repeat="card in cards" ng-if="cards.length">
+      <a ng-href="card/{{ card._id }}" class="result-image-container">
+        <img ng-src="{{ card.imagePath }}" class="result-image"/>
+      </a>
+      <div class="result-description">
+        <div class="result-description__heading">
+          <p class="result-description__name">{{ card.name }}</p>
+          <div class="types">
+            <img ng-repeat="type in card.types" ng-src="img/pokemon-types/{{ type | lowercase }}.png" class="type"/>
+          </div>
+        </div>
+        <div class="result-description__description">
+          {{ card.description.substring(0, 30) }}<a class="more-detail" ng-href="card/{{ card._id }}">...</a>
+        </div>
+        <div class="result-description__details">
+          <div class="condition-box">
+            <b>Condition: </b>{{ card.condition }}
+          </div>
+          <div class="price-box">
+            <b>Price: </b>{{ card.price | currency }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="empty-cards-message" ng-if="!cards.length">
+      {{ user.username }} has no cards to display.
+    </div>
+  </div>
+
+</div>

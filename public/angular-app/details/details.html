@@ -1,0 +1,33 @@
+<poke-navigation></poke-navigation>
+<div class="avaliable" ng-if="vm.card.sold || vm.card.traded">
+  The following card is no longer avaliable.
+</div>
+<div class="details-container">
+  <img ng-src="{{ vm.card.imagePath }}" class="details-image"/>
+  <div class="details-description">
+    <div class="details-description__heading">
+      <h1 class="details-description__name">{{ vm.card.name }}</h1>
+      <div class="types">
+        <img ng-repeat="type in vm.card.types" ng-src="img/pokemon-types/{{ type | lowercase }}.png" class="details-type"/>
+      </div>
+    </div>
+    <div class="details-description__user">
+      <a ng-href="/profile/{{ vm.user.username }}">{{ vm.user.username }}</a>
+    </div>
+    <div class="details-description__description">
+      {{ vm.card.description }}
+    </div>
+    <div class="details-description__details">
+      <div class="condition-box">
+        <b>Condition: </b>{{ vm.card.condition }}
+      </div>
+      <div class="price-box">
+        <b>Price: </b>{{ vm.card.price | currency }}
+      </div>
+    </div>
+    <div class="details-description__btns" ng-if="vm.giveOptions">
+      <md-button ng-click="vm.tradeCard()" class="md-raised md-primary">Trade</md-button>
+      <md-button class="md-raised md-primary" ng-click="vm.buyCard()">Buy</md-button>
+    </div>
+  </div>
+</div>

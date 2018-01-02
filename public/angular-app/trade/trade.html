@@ -1,0 +1,27 @@
+<poke-navigation></poke-navigation>
+<div class="trade-container" ng-cloak>
+  <div class="trade-card">
+    <img src="{{ vm.tradeCard.imagePath }}" class="trade-image" />
+  </div>
+  <div class="trade-confirm">
+    <i class="fa fa-arrow-right arrow-icon"></i>
+    <i class="fa fa-arrow-left arrow-icon"></i>
+    <div ng-if="vm.selectedCard" class="message-display">
+      You selected: {{ vm.selectedCard.name }}
+    </div>
+    <div ng-if="!vm.selectedCard && vm.submitted" class="message-display danger-text">
+      Please Select A Card
+    </div>
+    <div class="confirm-btn-container">
+      <md-button ng-click="vm.submitTrade()" class="md-raised md-primary confirm-btn">Confirm Trade</md-button>
+    </div>
+  </div>
+  <div class="tradeable-list">
+    <img
+      ng-repeat="card in vm.cards"
+      ng-click="vm.selectCard(card)"
+      ng-class="{'active-image' : (vm.selectedCard ? vm.selectedCard._id === card._id : false)}"
+      ng-src="{{ card.imagePath }}"
+      class="user-card"/>
+  </div>
+</div>

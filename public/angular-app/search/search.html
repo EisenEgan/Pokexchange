@@ -1,0 +1,152 @@
+<poke-navigation></poke-navigation>
+<div ng-controller="SearchCtrl" class="search-container" ng-cloak>
+  <div class="search-button" ng-click="vm.openSearch = !vm.openSearch">
+    <h3>Search Criteria</h3>
+    <i class="fa fa-plus"></i>
+  </div>
+  <div class="search-conditions-container">
+    <div class="search-conditions" ng-show="vm.openSearch">
+      <form novalidate name="searchForm" ng-submit="vm.submit(searchForm)">
+        <md-input-container class="md-block search-input">
+          <label>Pokemon Name</label>
+          <md-select ng-model="vm.searchCriteria.name">
+            <md-option ng-value="All">All</md-option>
+            <md-option ng-repeat="pokemon in vm.pokemonList" ng-value="pokemon.name">
+              {{ pokemon.name }}
+            </md-option>
+          </md-select>
+        </md-input-container>
+
+        <md-input-container class="md-block search-input">
+          <label>Pokemon Type</label>
+          <md-select ng-model="vm.searchCriteria.type">
+            <md-option ng-value="All">All</md-option>
+            <md-option ng-repeat="type in vm.pokemonTypes" ng-value="type">
+              {{ type }}
+            </md-option>
+          </md-select>
+        </md-input-container>
+
+        <!-- <md-input-container class="md-block">
+          <label>Price</label>
+          <input name="price" ng-model="vm.card.price" ng-pattern="/^\d+(\.\d{1,2})?$/" />
+          <div ng-messages="addForm.price.$error" role="alert">
+            <div ng-message="pattern">Price must be a number with at most 2 decimal places</div>
+          </div>
+        </md-input-container> -->
+
+        <div layout="row">
+          <md-input-container flex="50" class="search-input">
+            <label>Minimum Price</label>
+            <input name="minimumPrice" ng-model="vm.searchCriteria.minPrice" ng-pattern="/^\d+(\.\d{1,2})?$/" />
+            <div ng-messages="searchForm.price.$error" role="alert">
+              <div ng-message="pattern">Minimum price must be a number with at most 2 decimal places</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container flex="50" class="search-input">
+            <label>Maximum Price</label>
+            <input name="maximumPrice" ng-model="vm.searchCriteria.maxPrice" ng-pattern="/^\d+(\.\d{1,2})?$/"/>
+            <div ng-messages="searchForm.price.$error" role="alert">
+              <div ng-message="pattern">Maximum price must be a number with at most 2 decimal places</div>
+            </div>
+          </md-input-container>
+        </div>
+
+        <div layout="row">
+          <md-input-container flex="50" class="search-input">
+            <label>Minimum Condition</label>
+            <md-select name="condition" ng-model="vm.searchCriteria.minCondition">
+              <md-option ng-repeat="condition in vm.conditionValues" ng-value="condition">
+                {{ condition }}
+              </md-option>
+            </md-select>
+          </md-input-container>
+          <md-input-container flex="50" class="search-input">
+            <label>Maximum Condition</label>
+            <md-select name="condition" ng-model="vm.searchCriteria.maxCondition">
+              <md-option ng-repeat="condition in vm.conditionValues" ng-value="condition">
+                {{ condition }}
+              </md-option>
+            </md-select>
+          </md-input-container>
+        </div>
+
+        <md-switch ng-model="vm.searchCriteria.tradable">
+          Tradable Only
+        </md-switch>
+
+        <div class="btn-container">
+          <md-button type="submit" class="md-raised md-primary">Search</md-button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <div class="criteria">
+    <md-chips class="custom-chips" ng-model="vm.cardObjs" readonly="true"
+        md-transform-chip="vm.newCard($chip)" md-removable="true">
+      <md-chip-template>
+        <span>
+          <strong>{{$chip.name}}: </strong>
+          <em>{{$chip.property}}</em>
+        </span>
+      </md-chip-template>
+      <button md-chip-remove ng-click="vm.removeChip($chip)" class="md-primary criteriaChip">
+        <md-icon md-svg-icon="md-close"></md-icon>
+      </button>
+    </md-chips>
+  </div>
+
+  <div class="results-container">
+    <!-- <div class="result">
+      <a href="#" class="result-image-container">
+        <img src="https://static-6.studiobebop.net/pokemon_data/card_images/Arcanine__23_102__Base_Set.jpg" class="result-image"/>
+      </a>
+      <div class="result-description">
+        <div class="result-description__heading">
+          <p class="result-description__name">Arcanine</p>
+          <div class="types">
+            <img src="img/pokemon-types/fire.png" class="type"/>
+          </div>
+        </div>
+        <div class="result-description__description">
+          This is a rare arcanine card blah<a class="more-detail" href="#">...</a>
+        </div>
+        <div class="result-description__details">
+          <div class="condition-box">
+            <b>Condition: </b>10
+          </div>
+          <div class="price-box">
+            <b>Price: </b>$40.00
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div class="result" ng-repeat="card in vm.cards | filter:{sold:false, traded:false}">
+      <a ng-href="card/{{ card._id }}" class="result-image-container">
+        <img ng-src="{{ card.imagePath }}" class="result-image"/>
+      </a>
+      <div class="result-description">
+        <div class="result-description__heading">
+          <p class="result-description__name">{{ card.name }}</p>
+          <div class="types">
+            <img ng-repeat="type in card.types" ng-src="img/pokemon-types/{{ type | lowercase }}.png" class="type"/>
+          </div>
+        </div>
+        <div class="result-description__description">
+          {{ card.description.substring(0, 30) }}<a class="more-detail" ng-href="card/{{ card._id }}">...</a>
+        </div>
+        <div class="result-description__details">
+          <div class="condition-box">
+            <b>Condition: </b>{{ card.condition }}
+          </div>
+          <div class="price-box">
+            <b>Price: </b>{{ card.price | currency }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

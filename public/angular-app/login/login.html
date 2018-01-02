@@ -1,0 +1,79 @@
+<div class="login-container">
+  <div class="form-container">
+    <div class="form-panel">
+      <div class="loginRegisterPanel">
+        <div class="login" ng-class="{active: vm.login}" ng-click="vm.changeTab('login')">
+          Login
+        </div>
+        <div class="register" ng-class="{active: !vm.login}" ng-click="vm.changeTab('register')">
+          Register
+        </div>
+      </div>
+      <div ng-controller="LoginCtrl" layout="column" ng-cloak class="login-form md-inline-form">
+        <md-content md-theme="docs-dark" layout-padding class="login-content">
+          <form novalidate name="vm.projectForm" ng-submit="vm.submit(vm.projectForm)">
+            <md-input-container class="md-block">
+              <label>Email</label>
+              <input required md-no-asterisk name="email" ng-model="vm.project.email"
+              minlength="8" maxlength="100" ng-pattern="/^.+@.+\..+$/" >
+              <div ng-messages="vm.projectForm.email.$error" role="alert">
+                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                  Your email must be more than 8 characters long
+
+                </br/> and look like an e-mail address.
+                </div>
+              </div>
+            </md-input-container>
+            <md-input-container class="md-block">
+              <label>Password</label>
+              <input
+                required
+                md-no-asterisk
+                type="password"
+                name="password1"
+                ng-model="vm.project.password1"
+                minlength="8"
+              >
+              <div ng-messages="vm.projectForm.password1.$error" role="alert">
+                <div ng-message-exp="['required', 'minlength']">
+                  Your password must be at least 8 characters long.
+                </div>
+              </div>
+            </md-input-container>
+            <md-input-container class="md-block" ng-if="!vm.login">
+              <label>Repeat Password</label>
+              <input
+                required
+                md-no-asterisk
+                type="password"
+                name="password2"
+                ng-model="vm.project.password2"
+                minlength="8"
+                compare-to="vm.project.password1"
+              >
+              <div ng-messages="vm.projectForm.password2.$error" role="alert">
+                <div ng-message-exp="['required', 'minlength']">
+                  Your password must be at least 8 characters long.
+                </div>
+                <div ng-message-exp="['compareTo']">Doesn't match first password.</div>
+              </div>
+            </md-input-container>
+            <div class="btn-container">
+              <md-button type="sumbit" class="md-raised md-primary login-btn">Primary</md-button>
+            </div>
+          </form>
+        </md-content>
+      </div>
+      <div class="socialMediaLoginPanel">
+        <!-- <a href="/api/oauth/twitter"> -->
+          <div class="twitter" ng-click="vm.socialSignIn('twitter')">
+            <i class="fa fa-twitter"></i> Sign in with Twitter
+          </div>
+        <!-- </a> -->
+        <div class="googleplus" ng-click="vm.socialSignIn('google')">
+          <i class="fa fa-google-plus"></i> Sign in with Google+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

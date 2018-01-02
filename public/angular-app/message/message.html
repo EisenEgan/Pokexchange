@@ -1,0 +1,27 @@
+<poke-navigation></poke-navigation>
+<div class="mail-container" ng-cloak>
+<!-- Consider User Avatars -->
+  <div class="mail-details">
+    <div class="from-details">
+      <b>From: <a ng-href="/profile/{{ vm.message.sender.username }}">{{ vm.message.sender.username }}</a></b>
+    </div>
+    <div class="time-details">
+      {{ vm.message.timeSince }}
+    </div>
+  </div>
+  <div class="mail-content">
+    <div class="subject">
+      {{ vm.message.header }}
+    </div>
+    <div class="message" ng-if="vm.message.messageType=='auto'" ng-bind-html="vm.message.message"></div>
+    <div class="message" ng-if="vm.message.messageType!='auto'">
+      {{ vm.message.message }}
+    </div>
+    <div class="btn-container" ng-if="vm.message.tradeOffer">
+      <div class="message-btns">
+        <md-button class="md-raised" ng-click="vm.acceptOffer()">Accept</md-button>
+        <md-button class="md-raised" ng-click="vm.rejectOffer()">Decline</md-button>
+      </div>
+    </div>
+  </div>
+</div>

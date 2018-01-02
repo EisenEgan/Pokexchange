@@ -1,0 +1,19 @@
+<poke-navigation></poke-navigation>
+<div class="mail-container" ng-cloak>
+  <div class="delete">
+    <div class="delete-checkbox-label">
+      Select All
+    </div>
+    <div class="delete-checkbox">
+      <md-checkbox ng-model="confirmed" ng-change="change()" class="red-checkbox"></md-checkbox>
+    </div>
+    <md-button class="md-raised" ng-click="delete()">Delete Selected</md-button>
+  </div>
+  <md-list-item ng-repeat="message in messages | orderBy: 'createdAt':true">
+    <md-checkbox ng-model="message.selected" class="red-checkbox"></md-checkbox>
+    <div ng-click="selectMessage(message._id)">
+      <p class="message-part message-sender" ng-class="{bold: !message.read}">{{ message.sender.username }}</p>
+      <p class="message-part" ng-class="{bold: !message.read}">{{ message.header.split(" ").slice(0, 4).join(" ") }} - {{ message.message.split(" ").slice(0, 6).join(" ") }}</p>
+    </div>
+  </md-list-item>
+</div>
